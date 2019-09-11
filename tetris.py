@@ -123,4 +123,9 @@ class Tetris:
     #displaying large text in the 
     def display_screen(text):
         pass
+    
+    
+    
+if __name__ == '__main__':
+    main()
         
