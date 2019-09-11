@@ -65,22 +65,31 @@ class Tetris:
                     if (pygame.event.key == K_p):
                         screen.fill(black)
                         show_text_screen('PAUSED')
+                        
                         fall_time = pygame.time.time()
+                        
                         down_time = pygame.time.time()
+                        
                         sideways_time = pygame.time.time()
                         
-                    elif (pygame.event.key == K_LEFT):
+                    elif (pygame.event.key ==
+                          K_LEFT):
+                        
                         move_left = False
                         
-                    elif (pygame.event.key == K_RIGHT):
+                    elif (pygame.event.key ==
+                          K_RIGHT):
+                        
                         move_right = False
                         
-                    elif (pygame.event.key == K_DOWN):
+                    elif (pygame.event.key ==
+                          K_DOWN):
+                        
                         move_down == False
                         
                 elif pygame.event.type == KEYDOWN:
                     
-                    #moving sideways
+                    #moving pieces sideways
                     if (pygame.event.key == K_LEFT) and valid_pos(board, falling_piece, adjX=-1):
                         
                         falling_piece['x'] -= 1
@@ -93,14 +102,17 @@ class Tetris:
                         move_right = True
                         move_left = False
                         sideways_time = pygame.time.time()
-
                         
+                    #rotating pieces
+                    elif (pygame.event.key == K_UP):
+                        falling_piece['rotation'] =(falling_piece['rotation'] + 1) % len(Shapes[falling_piece['shape']])
                         
-                        
+                        if not valid_pos(board, falling_piece):
+                            falling_piece['rotation'] = (falling_piece['rotation'] - 1) % len(Shapes[falling_piece['shape']])
                         
                         
           
-                #drawing to screen
+            #drawing to screen
             screen.fill(black)
             draw_board(board)
             draw_status(score, level)
