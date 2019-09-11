@@ -7,7 +7,7 @@ board_height = 30
 blank = '.'
 template_width = 15
 template_height = 15
-Xmargin = int(width - board_weight * box_size) / 2)
+Xmargin = int((width - board_weight * box_size) / 2)
 Top_margin = height - (board_height * box_size) - 5
 
 
@@ -26,16 +26,19 @@ purple = (64, 0, 110)
 orange = (255, 149, 28)
 pink = (255, 82, 157)
 
+#font
+FONT = './font/TETRIS.TTF'
+
 #tetris shapes
-S_shape = [['.....',
-            '.....',
-            '..00.',
-            '.00..',
-            '.....'],
-           ['.....',
-            '..0..',
-            '..00.',
-            '...0.',
+S_shape = [['.....', 
+            '.....', 
+            '..00.', 
+            '.00..', 
+            '.....'], 
+           ['.....', 
+            '..0..', 
+            '..00.', 
+            '...0.', 
             '.....']]
 
 Z_shape = [['.....',
@@ -53,7 +56,7 @@ T_shape = [['.....',
             '..O..',
             '.OOO.',
             '.....',
-            '.....']
+            '.....'],
            ['.....',
             '..O..',
             '..OO.',
