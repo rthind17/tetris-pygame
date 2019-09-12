@@ -38,8 +38,9 @@ def valid_space():
 def check_lost():
     pass
 
+#picks one random shape falling down the screen 
 def get_shape():
-    pass
+    return random.choice(Shapes)
 
 def draw_text():
     pass
