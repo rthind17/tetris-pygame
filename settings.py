@@ -25,6 +25,8 @@ purple = (64, 0, 110)
 orange = (255, 149, 28)
 pink = (255, 82, 157)
 
+shape_colors = [(white), (black), (gray), (red), (yellow), (blue), (light_blue), (green), (purple), (orange), (pink)] 
+
 shadow = gray
 
 #font
