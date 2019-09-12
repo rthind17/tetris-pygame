@@ -1,22 +1,21 @@
 fps = 25
-width = 650
-height = 490
-box_size = 30
-board_weight = 20
-board_height = 30
-blank = '.'
-template_width = 15
-template_height = 15
-Xmargin = int((width - board_weight * box_size) / 2)
-Top_margin = height - (board_height * box_size) - 5
+s_width = 800
+s_height = 700
+block_size = 30
+board_width = 300 
+board_height = 600
 
+X = (s_width - board_width) / 2
+Y = s_height - board_height
 
 #frequency
 sideway_freq = 0.15
 down_freq = 0.1
 
 #colors
+white = (255, 255, 255)
 black = (0, 0, 0)
+gray = (185, 185, 185)
 red = (255, 17, 0)
 yellow = (255, 213, 0)
 blue = (0, 47, 255)
@@ -25,6 +24,8 @@ green = (2, 212, 23)
 purple = (64, 0, 110)
 orange = (255, 149, 28)
 pink = (255, 82, 157)
+
+shadow = gray
 
 #font
 FONT = './font/TETRIS.TTF'
