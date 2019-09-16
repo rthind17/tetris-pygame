@@ -40,7 +40,7 @@ def check_lost():
 
 #picks one random shape falling down the screen 
 def get_shape():
-    return random.choice(Shapes)
+    return Tetris(5, 0, random.choice(Shapes))
 
 def draw_text():
     pass
@@ -82,7 +82,6 @@ def main():
     clock = pygame.time.Clock()
     fall_time = 0 
     
-    
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -94,13 +93,11 @@ def main():
                     current_piece.x -= 1
                     if not(valid_space(current_piece, grid)):
                         current_piece += 1
-#returns and checks if the current position of the piece is in a valid space
                     
                 if event.key == pygame.K_RIGHT:
                     current_piece.x += 1
                     if not(valid_space(current_piece, grid)):
                         current_piece -= 1
-                
                 
                 if event.key == pygame.K_UP:
                     current_piece.rotation += 1
@@ -111,6 +108,8 @@ def main():
                     current_piece.y += 1
                     if not(valid_space(current_piece, grid)):
                         current_piece -= 1
+
+#the if not condition returns and checks if the current position of the piece is in a valid space
                         
         draw_window(Surface, grid)      
         
