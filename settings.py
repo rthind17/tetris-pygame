@@ -1,3 +1,7 @@
+import pygame
+
+pygame.font.init()
+
 fps = 25
 s_width = 800
 s_height = 700
@@ -135,6 +139,8 @@ L_shape = [['.....',
             '..O..',
             '..O..',
             '.....']]
+
+
 
 Shapes = {'S': S_shape,
           'Z': Z_shape,
