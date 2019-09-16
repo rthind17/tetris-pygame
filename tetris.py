@@ -13,7 +13,7 @@ class Tetris(object):
         self.color = shape_colors[Shapes.index(shape)] #{shape} = error, find out how to fix it 
         self.rotation = 0
         
-def create_grid(locked_pos = {}):
+def create_grid(locked_pos={}):
     #create one list for every row in grid
     #since we have 20 rows we want to create 20 sub lists
     #each sub list is going to have 10 colors 
@@ -71,4 +71,50 @@ def draw_window(Surface, grid):
     draw_grid(Surface, grid)        
     pygame.display.update()        
 
-
+def main():
+    locked_pos = {}
+    grid = create_grid(locked_pos)
+    
+    change_piece = False
+    run = True
+    current_piece = get_shape()
+    next_piece = get_shape()
+    clock = pygame.time.Clock()
+    fall_time = 0 
+    
+    
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    
+                    current_piece.x -= 1
+                    if not(valid_space(current_piece, grid)):
+                        current_piece += 1
+#returns and checks if the current position of the piece is in a valid space
+                    
+                if event.key == pygame.K_RIGHT:
+                    current_piece.x += 1
+                    if not(valid_space(current_piece, grid)):
+                        current_piece -= 1
+                
+                
+                if event.key == pygame.K_UP:
+                    current_piece.rotation += 1
+                    if not(valid_space(current_piece, grid)):
+                        current_piece -= 1
+                    
+                if event.key == pygame.K_DOWN:
+                    current_piece.y += 1
+                    if not(valid_space(current_piece, grid)):
+                        current_piece -= 1
+                        
+        draw_window(Surface, grid)      
+        
+    
+def main_menu(win):
+    pass
+ 
