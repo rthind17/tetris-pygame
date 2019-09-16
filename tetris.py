@@ -1,8 +1,6 @@
 import pygame
 from pygame.locals import *
-import time
 import random
-import sys
 from settings import *
 
 class Tetris(object):
@@ -60,18 +58,22 @@ def draw_grid(Surface, grid):
     #draws the actual grid
     #4 = border size
     
-def draw_window(Surface, grid):
-    pygame.Surface.fill((black))
     
+def draw_window(Surface, grid):
+    Surface.fill((black))
+    
+    #Tetris title
     pygame.font.init()
     label = font.render("TETRIS", 1, (white))
     
-    pygame.Surface.blit(label, (X + board_width/2 - label.get_width()/2, 30))
+    Surface.blit(label, (X + board_width / 2 - label.get_width() / 2, 30))
     
     draw_grid(Surface, grid)        
     pygame.display.update()        
 
 def main(win):
+    global grid
+    
     locked_pos = {}
     grid = create_grid(locked_pos)
     
@@ -102,7 +104,7 @@ def main(win):
                 if event.key == pygame.K_UP:
                     current_piece.rotation += 1
                     if not(valid_space(current_piece, grid)):
-                       current_piece -= 1
+                        current_piece -= 1
                     
                 if event.key == pygame.K_DOWN:
                     current_piece.y += 1
@@ -119,7 +121,6 @@ def main_menu(win):
 
 #creating a pygame surface
 win = pygame.display.set_mode((s_width, s_height))
-pygame.display.set_caption('TETRIS')
 main_menu(win)
 
 
