@@ -10,7 +10,7 @@ board_width = 300
 board_height = 600
 
 X = (s_width - board_width) / 2
-Y = s_height - board_height
+Y = (s_height - board_height) - 5
 
 #frequency
 sideway_freq = 0.15
@@ -34,7 +34,7 @@ shape_colors = [(white), (black), (gray), (red), (yellow), (blue), (light_blue),
 shadow = gray
 
 #font
-FONT_PATH = './font/TETRIS.TTF'
+FONT_PATH = './font/Tetris.ttf'
 font = pygame.font.Font(FONT_PATH, 60)
 
 #tetris shapes
@@ -142,12 +142,4 @@ L_shape = [['.....',
 
 
 
-Shapes = {'S': S_shape,
-          'Z': Z_shape,
-          'J': J_shape,
-          'L': L_shape,
-          'I': I_shape,
-          'O': O_shape,
-          'T': T_shape}
-
-
+Shapes = [S_shape, Z_shape, T_shape, I_shape, O_shape, J_shape, L_shape]
