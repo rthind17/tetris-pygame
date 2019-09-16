@@ -30,7 +30,8 @@ shape_colors = [(white), (black), (gray), (red), (yellow), (blue), (light_blue),
 shadow = gray
 
 #font
-FONT = './font/TETRIS.TTF'
+FONT_PATH = './font/TETRIS.TTF'
+font = pygame.font.Font(FONT_PATH, 60)
 
 #tetris shapes
 S_shape = [['.....', 
