@@ -71,7 +71,7 @@ def draw_window(Surface, grid):
     draw_grid(Surface, grid)        
     pygame.display.update()        
 
-def main():
+def main(win):
     locked_pos = {}
     grid = create_grid(locked_pos)
     
@@ -102,7 +102,7 @@ def main():
                 if event.key == pygame.K_UP:
                     current_piece.rotation += 1
                     if not(valid_space(current_piece, grid)):
-                        current_piece -= 1
+                       current_piece -= 1
                     
                 if event.key == pygame.K_DOWN:
                     current_piece.y += 1
@@ -111,9 +111,17 @@ def main():
 
 #the if not condition returns and checks if the current position of the piece is in a valid space
                         
-        draw_window(Surface, grid)      
+        draw_window(win, grid)      
         
     
 def main_menu(win):
-    pass
+    main(win)
+
+#creating a pygame surface
+win = pygame.display.set_mode((s_width, s_height))
+pygame.display.set_caption('TETRIS')
+main_menu(win)
+
+
+
  
