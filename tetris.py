@@ -10,7 +10,7 @@ class Tetris(object):
         self.x = x
         self.y = y
         self.shape = shape
-        self.color = shape_colors[Shapes.index{shape}] #{shape} = error, find out how to fix it 
+        self.color = shape_colors[Shapes.index(shape)] #{shape} = error, find out how to fix it 
         self.rotation = 0
         
 def create_grid(locked_pos = {}):
@@ -44,5 +44,31 @@ def get_shape():
 
 def draw_text():
     pass
+
+def draw_grid(Surface, grid):
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            pygame.draw.rect(Surface, grid[i][j], (X + j*block_size, Y + i*block_size, block_size, block_size), 0)
+            
+            #looping through every color the grid
+            #Surface = what I'm drawing on to 
+            #grid[i][j] = color
+            #X + j*30, Y + i+30 = the position in which it's being drawn on to
+    
+    
+    pygame.draw.rect(Surface, (red), (X, Y, board_width, board_height), 4)
+    #draws the actual grid
+    #4 = border size
+    
+def draw_window(Surface, grid):
+    pygame.Surface.fill((black))
+    
+    pygame.font.init()
+    label = font.render("TETRIS", 1, (white))
+    
+    pygame.Surface.blit(label, (X + board_width/2 - label.get_width()/2, 30))
+    
+    draw_grid(Surface, grid)        
+    pygame.display.update()        
 
 
