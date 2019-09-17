@@ -45,8 +45,23 @@ def convert_shape_format(shape):
     for i, pos in enumerate(pos):
         pos[i] = (spot[0] - 2, spot[1] - 4)
 
-def valid_space():
-    pass
+def valid_space(shape, grid):
+    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (black)] for i in range(20)]
+#getting every single possible position for a 10x20 grid and adding it in a tuple
+#if grid[i][j] == black only adds the position of (j, i) if grid[i][j] == black is true
+
+    accepted_pos = [j for sub in accepted_pos for j in sub]
+#converting into a 1 dimensional list
+#takes all positions in accepted_pos and adding it into a one dimensional list 
+
+    formatted = convert_shape_format(shape)
+    
+    for pos in formatted:
+#checks if pos exists in accepted_pos
+        if pos not in accepted_pos:
+            if pos[1] > -1:
+                return False
+    return True
     
 def check_lost():
     pass
