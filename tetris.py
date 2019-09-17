@@ -26,9 +26,24 @@ def create_grid(locked_pos={}):
                 grid[i][j] = key
     return grid
         
-                   
-def convert_shape_format(self):
-    pass
+#takes the format of the block shapes and converts it into a form python can read                    
+def convert_shape_format(shape):
+    pos = []
+    format = shape.shape[shape.rotation % len(shape.shape)]
+    #gives the sub list (the first list in the shape variables) needed
+    #Ex. if shape.rotation = 0, then 0 % len(shape.shape) (len = 4) gives us the first list of the shape 
+    #Ex. if shape.rotation = 1, then 1 % len(shape.shape) (len = 4) gives us the second list of the shape  
+    
+    for i, line in enumerate(format):
+        row = list(line)
+        for j, column in enumerate(row):
+            if column == '0':
+                pos.append((shape.x + j, shape.y + i))
+#shape.x = current value of the shape
+#if the shape is moving down the screen, is moving left and right we need to add the j value is
+        
+    for i, pos in enumerate(pos):
+        pos[i] = (spot[0] - 2, spot[1] - 4)
 
 def valid_space():
     pass
