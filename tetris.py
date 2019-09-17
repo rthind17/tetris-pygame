@@ -64,9 +64,29 @@ def draw_window(Surface, grid):
     
     #Tetris title
     pygame.font.init()
-    label = font.render("TETRIS", 1, (white))
     
-    Surface.blit(label, (X + board_width / 2 - label.get_width() / 2, 30))
+    T = font.render("T", 1, (blue)) 
+    E = font.render("E", 1, (yellow)) 
+    T2 = font.render("T", 1, (red)) 
+    R = font.render("R", 1, (green)) 
+    I = font.render("I", 1, (light_blue))
+    S = font.render("S", 1, (orange))
+    
+    Surface.blit(T, (X - board_width / 15, 30))
+    
+    Surface.blit(E, ((X + board_width / 2) - (E.get_width() / 2) - 95, 30))
+    
+    Surface.blit(T2, ((X + board_width / 2) - (T2.get_width() / 2) - 35, 30))
+    
+    Surface.blit(R, ((X + board_width / 2) - (R.get_width() / 2) + 15, 30))
+    
+    Surface.blit(I, ((X + board_width / 2) - (T2.get_width() / 2) + 85, 30))
+    
+    Surface.blit(S, ((X + board_width / 2) - (T2.get_width() / 2) + 135, 30))
+
+    #Surface.blit(I, (X - board_width / 14, 30))
+    #Surface.blit(S, (X - board_width / 14, 30))
+    #Surface.blit(T, (X - board_width / 2 - T.get_width() / 2, 30))
     
     draw_grid(Surface, grid)        
     pygame.display.update()        
