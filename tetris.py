@@ -63,9 +63,15 @@ def valid_space(shape, grid):
                 return False
     return True
     
-def check_lost():
-    pass
-
+def check_lost(pos):
+#checks if any of the positions are above the screen
+    for i in pos:
+        x, y = pos
+        if y < 1:
+            return True
+    
+    return False
+        
 #picks one random shape falling down the screen 
 def get_shape():
     return Tetris(5, 0, random.choice(Shapes))
