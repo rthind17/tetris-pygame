@@ -83,11 +83,20 @@ def draw_window(Surface, grid):
     Surface.blit(I, ((X + board_width / 2) - (T2.get_width() / 2) + 85, 30))
     
     Surface.blit(S, ((X + board_width / 2) - (T2.get_width() / 2) + 135, 30))
-
-    #Surface.blit(I, (X - board_width / 14, 30))
-    #Surface.blit(S, (X - board_width / 14, 30))
-    #Surface.blit(T, (X - board_width / 2 - T.get_width() / 2, 30))
     
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            pygame.draw.rect(Surface, grid[i][j], (X + j*block_size, Y + i*block_size, block_size, block_size), 0)
+            
+            #looping through every color the grid
+            #Surface = what I'm drawing on to 
+            #grid[i][j] = color
+            #X + j*30, Y + i+30 = the position in which it's being drawn on to
+    
+    pygame.draw.rect(Surface, (red), (X, Y, board_width, board_height), 4)
+    #draws the actual grid
+    #4 = border size
+
     draw_grid(Surface, grid)        
     pygame.display.update()        
 
