@@ -43,7 +43,10 @@ def convert_shape_format(shape):
 #if the shape is moving down the screen, is moving left and right we need to add the j value is
         
     for i, pos in enumerate(pos):
-        pos[i] = (spot[0] - 2, spot[1] - 4)
+        pos[i] = (pos[0] - 2, pos[1] - 4)
+    
+    
+    return pos
 
 def valid_space(shape, grid):
     accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (black)] for i in range(20)]
@@ -81,11 +84,13 @@ def draw_text():
 
 def draw_grid(Surface, grid):
     for i in range(len(grid)):
+        #drawing horizontal lines
         pygame.draw.line(Surface, (gray), (X, Y + i*block_size), (X + board_width, Y + i*block_size))
      #draws 20 vertical lines   
      #everytime the function loops through a new row, the value of Y changes at the line that is being drawn, and X value stays static at the left side and right side of the screen
     
         for j in range(len(grid[i])):
+            #drawing vertical lines
             pygame.draw.line(Surface, (gray), (X + j*block_size, Y), (X + j*block_size, Y + board_height))
      #draws 10 horizontal lines
      #everytime the function loops through a new column, the value of X changes at the line that is being drawn, and the value of Y stays static at the top and bottom of the screen
@@ -137,7 +142,6 @@ def main(win):
     
     locked_pos = {}
     grid = create_grid(locked_pos)
-    
     change_piece = False
     run = True
     current_piece = get_shape()
@@ -146,36 +150,81 @@ def main(win):
     fall_time = 0 
     
     while run:
+        fall_speed = 0.27
+        grid = create_grid(locked_pos)
+        fall_time += clock.get_rawtime()
+#rawtime gets the amount of time since the last clock.tick()
+#when first adding fall time and clock, equals 0
+#next iteration its going to see how long it takes the while loop to run and then it's going to add that amount
+        clock.tick()
+        
+        if fall_time/1000 >= fall_speed:
+            fall_time = 0 
+            current_piece.y += 1
+#moves the block piece automatically down by 1
+
+            if not (valid_space(current_piece, grid)) and current_piece.y > 0:
+                current_piece.y -= 1
+                change_piece = True
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                pygame.display.quit()
+                quit()
             
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    
                     current_piece.x -= 1
-                    if not(valid_space(current_piece, grid)):
-                        current_piece += 1
+                    if not valid_space(current_piece, grid):
+                        current_piece.x += 1
                     
-                if event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT:
                     current_piece.x += 1
-                    if not(valid_space(current_piece, grid)):
-                        current_piece -= 1
+                    if not valid_space(current_piece, grid):
+                        current_piece.x -= 1
                 
                 if event.key == pygame.K_UP:
-                    current_piece.rotation += 1
-                    if not(valid_space(current_piece, grid)):
-                        current_piece -= 1
+                    #rotating shape
+                    current_piece.rotation = current_piece.rotation + 1 % len(current.piece.shape)
+                    if not valid_space(current_piece, grid):
+                        current_piece.rotation =  current_piece.rotation - 1 % len(current_piece.shape)
                     
                 if event.key == pygame.K_DOWN:
+                    #moving shape down
                     current_piece.y += 1
-                    if not(valid_space(current_piece, grid)):
-                        current_piece -= 1
+                    if not valid_space(current_piece, grid):
+                        current_piece.y -= 1
 
 #the if not condition returns and checks if the current position of the piece is in a valid space
-                        
-        draw_window(win, grid)      
         
+        shape_pos = convert_shape_format(current_piece)
+        for i in range(len(shape_pos)):
+        #add color of piece to the grid for drawing
+            
+            x, y = shape_pos[i]
+            if y > -1: #if not above the screen
+                grid[y][x] = current_piece.color
+        
+        if change_piece:
+            for pos in shape_pos:
+                p = (pos[0], pos[1])
+                locked_pos[p] = current_piece.color 
+                #the reason we have locked_pos is because we can get the position and color
+                #when we passed locked_pos in the grid function (main function) we can get each of those positions in the grid and update the color of piece
+                #locked_pos is a dictionary with a key of position and a value of color {pos:color}
+                
+            current_piece = next_piece 
+            next_piece = get_shape()
+            change_piece = False
+                        
+        draw_window(win, grid)     
+        
+        #Check if player lost
+        if check_lost(locked_pos):
+            run = False
+      
+    pygame.display.quit()    
     
 def main_menu(win):
     main(win)
