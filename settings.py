@@ -36,6 +36,7 @@ shadow = gray
 #font
 FONT_PATH = './font/Tetris.ttf'
 font = pygame.font.Font(FONT_PATH, 60)
+TEXT = pygame.font.SysFont('comicsans', 30)
 
 #tetris shapes
 S_shape = [['.....', 
