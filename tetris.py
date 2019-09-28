@@ -25,9 +25,8 @@ def create_grid(locked_pos={}):
                 key = locked_pos[(j, i)]
                 grid[i][j] = key
     return grid
-        
-#takes the format of the block shapes and converts it into a form python can read                    
-def convert_shape_format(shape):
+                           
+def convert_shape_format(shape): #takes the format of the block shapes and converts it into a form python can read
     pos = []
     format = shape.shape[shape.rotation % len(shape.shape)]
     #gives the sub list (the first list in the shape variables) needed
@@ -42,9 +41,8 @@ def convert_shape_format(shape):
 #shape.x = current value of the shape
 #if the shape is moving down the screen, is moving left and right we need to add the j value is
         
-    for i, pos in enumerate(pos):
+    for i, place in enumerate(pos):
         pos[i] = (pos[0] - 2, pos[1] - 4)
-    
     
     return pos
 
@@ -135,7 +133,30 @@ def draw_window(Surface, grid):
     #4 = border size
 
     draw_grid(Surface, grid)        
-    pygame.display.update()        
+    pygame.display.update() 
+
+##################################################   
+    
+def draw_next_shape(shape, Surface): #displays the next falling shape on the right side of the screen
+    text = TEXT
+    title = text.render('NEXT SHAPE', 1, (white))
+    
+    Sx = X + board_width + 50
+    Sy = Y + board_height/2 - 100
+    format = shape.shape[shape.rotation % len(shape.shape)]
+    
+    for i, line in enumerate(format):
+        row = list(line)
+        for j, column in enumerate(row):
+            if column == '0':
+                pygame.draw.rect(Surface, shape.color, (Sx + j*block_size, Sy + i*block_size, 30, 30), 0)
+    
+    Surface.blit(title, (Sx + 10, Sy - 30))
+    
+###################################################
+
+
+###################################################
 
 def main(win):
     global grid
@@ -218,13 +239,17 @@ def main(win):
             next_piece = get_shape()
             change_piece = False
                         
-        draw_window(win, grid)     
+        draw_window(win, grid)
+        draw_next_shape(next_piece, win)
+        pygame.display.update()
         
         #Check if player lost
         if check_lost(locked_pos):
             run = False
       
     pygame.display.quit()    
+
+################################################    
     
 def main_menu(win):
     main(win)
