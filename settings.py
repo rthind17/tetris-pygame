@@ -2,7 +2,6 @@ import pygame
 
 pygame.font.init()
 
-fps = 25
 s_width = 800
 s_height = 700
 block_size = 30
@@ -11,10 +10,6 @@ board_height = 600
 
 X = (s_width - board_width) / 2
 Y = (s_height - board_height) - 5
-
-#frequency
-sideway_freq = 0.15
-down_freq = 0.1
 
 #colors
 white = (255, 255, 255)
