@@ -71,8 +71,8 @@ def valid_space(shape, grid):
 
 def check_lost(pos):
 #checks if any of the positions are above the screen
-    for i in pos:
-        x, y = pos
+    for p in pos:
+        x, y = p
         if y < 1:
             return True
     
@@ -106,7 +106,30 @@ def draw_grid(Surface, grid):
      #draws 10 horizontal lines
      #everytime the function loops through a new column, the value of X changes at the line that is being drawn, and the value of Y stays static at the top and bottom of the screen
             
-################################################    
+#################################################### 
+
+def clear_row(grid, locked): #clears and shifts every row down when all positions are filled
+    
+    pass
+
+####################################################
+
+def draw_next_shape(shape, Surface): #displays the next falling shape on the right side of the screen
+    title = TEXT.render('NEXT SHAPE', 1, (white))
+    
+    Sx = X + board_width + 50
+    Sy = Y + board_height/2 - 100
+    form = shape.shape[shape.rotation % len(shape.shape)]
+    
+    for i, line in enumerate(form):
+        row = list(line)
+        for j, column in enumerate(row):
+            if column == '0':
+                pygame.draw.rect(Surface, shape.color, (Sx + j*block_size, Sy + i*block_size, block_size, block_size), 0)
+    
+    Surface.blit(title, (Sx + 10, Sy - 30))
+    
+####################################################
 
 def draw_window(Surface, grid):
     Surface.fill((black))
@@ -147,31 +170,7 @@ def draw_window(Surface, grid):
     #4 = border size
 
     draw_grid(Surface, grid) 
-    #pygame.display.update()
-
-##################################################   
-    
-def draw_next_shape(shape, Surface): #displays the next falling shape on the right side of the screen
-    title = TEXT.render('NEXT SHAPE', 1, (white))
-    
-    Sx = X + board_width + 50
-    Sy = Y + board_height/2 - 100
-    form = shape.shape[shape.rotation % len(shape.shape)]
-    
-    for i, line in enumerate(form):
-        row = list(line)
-        for j, column in enumerate(row):
-            if column == '0':
-                pygame.draw.rect(Surface, shape.color, (Sx + j*block_size, Sy + i*block_size, 30, 30), 0)
-    
-    Surface.blit(title, (Sx + 10, Sy - 30))
-    
-###################################################
-
-def clear_row(grid, locked): #clears and shifts every row down when all positions are filled
-    
-    pass
-    
+    pygame.display.update()
 
 ###################################################
 
@@ -209,7 +208,6 @@ def main(win):
             if event.type == pygame.QUIT:
                 run = False
                 pygame.display.quit()
-                quit()
             
             if event.type == pygame.KEYDOWN:
                 
@@ -257,7 +255,7 @@ def main(win):
             next_piece = get_shape()
             change_piece = False
             
-            clear_row(grid, locked_pos) * 10
+            #clear_row(grid, locked_pos) * 10
                         
         draw_window(win, grid)
         draw_next_shape(next_piece, win)
@@ -272,11 +270,25 @@ def main(win):
 ################################################    
     
 def main_menu(win):
-    main(win)
+    run = True
+    while run:
+        win.blit(img, (s_width/4, s_height/6))
+        draw_text(win, 'Press Any Key To Play', 60, (white))
+        
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.KEYDOWN:
+                main(win)
+                
+    
+    pygame.display.quit()
 
 #creating a pygame surface
 win = pygame.display.set_mode((s_width, s_height))
 main_menu(win)
+pygame.display.set_caption('Tetris')
 
 
 
