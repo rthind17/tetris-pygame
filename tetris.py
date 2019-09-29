@@ -89,25 +89,25 @@ def get_shape():
 def draw_text(Surface, text, size, color):
     label = TEXT.render(text, 1, color)
     
-    Surface.blit(label, (X + board_width/2 - (label.get_width()/2), Y1 + board_height/2 - label.get_height()/2))
+    Surface.blit(label, (X + board_width/2 - (label.get_width()/2), Y + board_height/2 - label.get_height()/2))
  
 ####################################################
 
 def draw_grid(Surface, grid):
     for i in range(len(grid)):
         #drawing horizontal lines
-        pygame.draw.line(Surface, (gray), (X, Y1 + i*block_size), (X + board_width, Y1 + i*block_size))
+        pygame.draw.line(Surface, (gray), (X, Y + i*block_size), (X+board_width, Y+ i*block_size))
      #draws 20 vertical lines   
      #everytime the function loops through a new row, the value of Y changes at the line that is being drawn, and X value stays static at the left side and right side of the screen
     
-        for j in range(len(grid)):
+        for j in range(len(grid[i])):
             #drawing vertical lines
-            pygame.draw.line(Surface, (gray), (X + j*block_size, Y1), (X + j*block_size, Y1 + board_height))
+            pygame.draw.line(Surface, (gray), (X + j*block_size, Y), (X + j*block_size, Y + board_height))
      #draws 10 horizontal lines
      #everytime the function loops through a new column, the value of X changes at the line that is being drawn, and the value of Y stays static at the top and bottom of the screen
             
 ################################################    
-                                   
+
 def draw_window(Surface, grid):
     Surface.fill((black))
     
@@ -146,7 +146,8 @@ def draw_window(Surface, grid):
     #draws the actual grid
     #4 = border size
 
-    draw_grid(Surface, grid)        
+    draw_grid(Surface, grid) 
+    #pygame.display.update()
 
 ##################################################   
     
