@@ -22,8 +22,8 @@ def create_grid(locked_pos={}):
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             if (j, i) in locked_pos:
-                key = locked_pos[(j, i)]
-                grid[i][j] = key
+                c = locked_pos[(j, i)]
+                grid[i][j] = c
     return grid
  
 ################################################    
@@ -43,8 +43,8 @@ def convert_shape_format(shape): #takes the format of the block shapes and conve
 #shape.x = current value of the shape
 #if the shape is moving down the screen, is moving left and right we need to add the j value is
         
-    for i, place in enumerate(pos):
-        pos[i] = (pos[0] - 2, pos[1] - 4)
+    for i, p in enumerate(pos):
+        pos[i] = (p[0] - 2, p[1] - 4)
     
     return pos
 
@@ -186,9 +186,9 @@ def main(win):
     next_piece = get_shape()
     clock = pygame.time.Clock()
     fall_time = 0 
+    fall_speed = 0.27
     
     while run:
-        fall_speed = 0.27
         grid = create_grid(locked_pos)
         fall_time += clock.get_rawtime()
 #rawtime gets the amount of time since the last clock.tick()
@@ -196,12 +196,12 @@ def main(win):
 #next iteration its going to see how long it takes the while loop to run and then it's going to add that amount
         clock.tick()
         
-        if fall_time/1000 >= fall_speed:
+        if fall_time/1000 > fall_speed:
             fall_time = 0 
             current_piece.y += 1
 #moves the block piece automatically down by 1
 
-            if not (valid_space(current_piece, grid)) and current_piece.y > 0:
+            if not(valid_space(current_piece, grid)) and current_piece.y > 0:
                 current_piece.y -= 1
                 change_piece = True
 
@@ -257,7 +257,7 @@ def main(win):
             next_piece = get_shape()
             change_piece = False
             
-            clear_row(grid, locked_pos)
+            clear_row(grid, locked_pos) * 10
                         
         draw_window(win, grid)
         draw_next_shape(next_piece, win)
