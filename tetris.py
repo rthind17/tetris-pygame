@@ -51,7 +51,7 @@ def convert_shape_format(shape): #takes the format of the block shapes and conve
 ###################################################
 
 def valid_space(shape, grid):
-    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0, 0, 0)] for i in range(20)]
+    accepted_pos = [[(j, i) for j in range(10) if grid[i][j] == (0,0,0)] for i in range(20)]
 #getting every single possible position for a 10x20 grid and adding it in a tuple
 #if grid[i][j] == black only adds the position of (j, i) if grid[i][j] == black is true
 
@@ -93,16 +93,16 @@ def draw_text(Surface, text, size, color):
  
 ####################################################
 
-def draw_grid(Surface, row, col):
-    for i in range(len(row)):
+def draw_grid(Surface, grid):
+    for i in range(len(grid)):
         #drawing horizontal lines
-        pygame.draw.line(Surface, (gray), (X, Y + i*block_size), (X + board_width, Y + i*block_size))
+        pygame.draw.line(Surface, (gray), (X, Y1 + i*block_size), (X + board_width, Y1 + i*block_size))
      #draws 20 vertical lines   
      #everytime the function loops through a new row, the value of Y changes at the line that is being drawn, and X value stays static at the left side and right side of the screen
     
-        for j in range(col):
+        for j in range(len(grid)):
             #drawing vertical lines
-            pygame.draw.line(Surface, (gray), (X + j*block_size, Y), (X + j*block_size, Y + board_height))
+            pygame.draw.line(Surface, (gray), (X + j*block_size, Y1), (X + j*block_size, Y1 + board_height))
      #draws 10 horizontal lines
      #everytime the function loops through a new column, the value of X changes at the line that is being drawn, and the value of Y stays static at the top and bottom of the screen
             
@@ -146,8 +146,7 @@ def draw_window(Surface, grid):
     #draws the actual grid
     #4 = border size
 
-    draw_grid(Surface, row, col)        
-    pygame.display.update() 
+    draw_grid(Surface, grid)        
 
 ##################################################   
     
@@ -158,7 +157,7 @@ def draw_next_shape(shape, Surface): #displays the next falling shape on the rig
     Sy = Y + board_height/2 - 100
     form = shape.shape[shape.rotation % len(shape.shape)]
     
-    for i, line in enumerate(format):
+    for i, line in enumerate(form):
         row = list(line)
         for j, column in enumerate(row):
             if column == '0':
