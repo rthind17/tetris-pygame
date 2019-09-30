@@ -3,7 +3,7 @@ from pygame.locals import *
 import random
 from settings import *
 
-class Tetris(object):
+class Tetris:
     def __init__(self, x, y, shape):
         self.x = x
         self.y = y
@@ -170,7 +170,7 @@ def draw_window(Surface, grid):
     #4 = border size
 
     draw_grid(Surface, grid) 
-    pygame.display.update()
+    #pygame.display.update()
 
 ###################################################
 
