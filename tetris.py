@@ -148,9 +148,7 @@ def draw_next_shape(shape, surface): #displays the next falling shape on the rig
 ####################################################
 
 def update_score(new_score):
-    with open('scores.txt', 'r') as f:
-        lines = f.readlines()
-        score = lines[0].strip()
+    score = highscore()
         
     with open('scores.txt', 'w') as f:
         if int(score) > new_score:
@@ -158,10 +156,18 @@ def update_score(new_score):
         else:
             f.write(str(new_score))
             
-             
+####################################################
+            
+def highscore():
+    with open('scores.txt', 'r') as f:
+        lines = f.readlines()
+        score = lines[0].strip()
+    
+    return score
+
 ####################################################
 
-def draw_window(surface, grid, score=0):
+def draw_window(surface, grid, score=0, last_score = 0):
     surface.fill((black))
 
     pygame.font.init()
@@ -184,6 +190,7 @@ def draw_window(surface, grid, score=0):
     
     surface.blit(S, ((X + board_width / 2) - (T2.get_width() / 2) + 135, 30))
     
+    #current score
     text = pygame.font.SysFont('comicsans', 30)
     label = text.render('Score: ' + str(score), 1, (white))
 
@@ -191,6 +198,15 @@ def draw_window(surface, grid, score=0):
     sy = Y + board_height/2 - 100
     
     surface.blit(label, (sx + 20, sy + 160))
+    
+    #highscore
+    label = text.render('Highscore: ' + last_score, 1, (white))
+
+    sx = X - 200
+    sy = Y + 100
+    
+    surface.blit(label, (sx + 20, sy + 160))
+
 
 
     for i in range(len(grid)):
@@ -209,7 +225,8 @@ def draw_window(surface, grid, score=0):
 
 ###################################################
 
-def main(win):  # *
+def main(win):
+    last_score = highscore()
     locked_pos = {}
     grid = create_grid(locked_pos)
 
@@ -288,7 +305,7 @@ def main(win):  # *
             change_piece = False
             score += clear_row(grid, locked_pos) * 10
 
-        draw_window(win, grid, score)
+        draw_window(win, grid, score, last_score)
         draw_next_shape(next_piece, win)
         pygame.display.update()
 
