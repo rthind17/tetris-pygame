@@ -126,6 +126,7 @@ def clear_row(grid, locked): #clears and shifts every row down when all position
             locked[new_key] = locked.pop(key)
 #shifts every single position in the grid, down 
     
+    return inc
 
 ####################################################
 def draw_next_shape(shape, surface): #displays the next falling shape on the right side of the screen
@@ -146,7 +147,21 @@ def draw_next_shape(shape, surface): #displays the next falling shape on the rig
     
 ####################################################
 
-def draw_window(surface, grid):
+def update_score(new_score):
+    with open('scores.txt', 'r') as f:
+        lines = f.readlines()
+        score = lines[0].strip()
+        
+    with open('scores.txt', 'w') as f:
+        if int(score) > new_score:
+            f.write(str(score))
+        else:
+            f.write(str(new_score))
+            
+             
+####################################################
+
+def draw_window(surface, grid, score=0):
     surface.fill((black))
 
     pygame.font.init()
@@ -168,6 +183,15 @@ def draw_window(surface, grid):
     surface.blit(I, ((X + board_width / 2) - (T2.get_width() / 2) + 85, 30))
     
     surface.blit(S, ((X + board_width / 2) - (T2.get_width() / 2) + 135, 30))
+    
+    text = pygame.font.SysFont('comicsans', 30)
+    label = text.render('Score: ' + str(score), 1, (white))
+
+    sx = X + board_width + 50
+    sy = Y + board_height/2 - 100
+    
+    surface.blit(label, (sx + 20, sy + 160))
+
 
     for i in range(len(grid)):
         for j in range(len(grid[i])):
@@ -196,14 +220,22 @@ def main(win):  # *
     clock = pygame.time.Clock()
     fall_time = 0
     fall_speed = 0.27
+    time_passed = 0
+    score = 0
 
     while run:
         grid = create_grid(locked_pos)
         fall_time += clock.get_rawtime()
+        time_passed += clock.get_rawtime()
         clock.tick()
 #rawtime gets the amount of time since the last clock.tick()
 #when first adding fall time and clock, equals 0
 #next iteration its going to see how long it takes the while loop to run and then it's going to add that amount
+
+        if time_passed/100 > 5:
+            time_passed = 0
+            if fall_speed > 0.12:
+                fall_speed -= 0.005
 
         if fall_time/1000 > fall_speed: #moves the block piece automatically down by 1
             fall_time = 0
@@ -254,17 +286,21 @@ def main(win):  # *
             current_piece = next_piece
             next_piece = get_shape()
             change_piece = False
-            clear_row(grid, locked_pos)
+            score += clear_row(grid, locked_pos) * 10
 
-        draw_window(win, grid)
+        draw_window(win, grid, score)
         draw_next_shape(next_piece, win)
         pygame.display.update()
 
         if check_lost(locked_pos):
-            draw_text_middle(win, "YOU LOST!", 80, (white))
+            draw_text(win, "YOU LOST!", 80, (white))
             pygame.display.update()
             pygame.time.delay(1500)
             run = False
+            
+            update_score(score)
+            
+    pygame.display.quit()
 
 def main_menu(win): 
     run = True
